@@ -1,6 +1,6 @@
 # aipolicies.eu — eu-regulations MCP skill
 
-A Claude skill and setup guide for the **public aipolicies.eu MCP server** — let AI agents query the EU AI Act (2024/1689), GDPR (2016/679), and Data Act (2023/2854) as primary sources, with cross-regulatory linking. Free, read-only, no authentication required.
+A Claude skill and setup guide for the **public aipolicies.eu MCP server** — let AI agents query the EU AI Act (2024/1689), GDPR (2016/679), and Data Act (2023/2854) as primary sources, with cross-regulatory linking. Free, read-only, works without any credentials — an optional API key raises rate limits.
 
 Live demo and tool reference: **[aipolicies.eu/mcp](https://aipolicies.eu/mcp)**
 
@@ -47,6 +47,12 @@ Add to your MCP configuration:
   }
 }
 ```
+
+#### Optional: raise your rate limits with an API key
+
+All three configs above work unauthenticated. To raise your rate limits, request a free key at
+[aipolicies.eu/api-keys](https://aipolicies.eu/api-keys) (email verification, issued immediately —
+no approval wait) and add an `X-API-Key: aip_live_...` header to the config.
 
 ---
 

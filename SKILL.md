@@ -25,12 +25,15 @@ Do not use this skill for questions about non-EU law, case law, soft law (guidel
 ## Connect
 
 **Endpoint:** `https://mcp.aipolicies.eu/mcp`
-Transport: Streamable HTTP. No authentication required.
+Transport: Streamable HTTP. No authentication required — anonymous callers get every read tool at
+modest rate limits. An optional `X-API-Key` header raises those limits; request one free at
+[aipolicies.eu/api-keys](https://aipolicies.eu/api-keys) (email verification, no approval wait).
 
 ### Claude Code
 ```
 claude mcp add eu-regulations --transport http https://mcp.aipolicies.eu/mcp
 ```
+With a key, add the header: `claude mcp add eu-regulations --transport http https://mcp.aipolicies.eu/mcp --header "X-API-Key: aip_live_..."`
 
 ### Claude Desktop
 ```json
@@ -38,11 +41,13 @@ claude mcp add eu-regulations --transport http https://mcp.aipolicies.eu/mcp
   "mcpServers": {
     "eu-regulations": {
       "type": "http",
-      "url": "https://mcp.aipolicies.eu/mcp"
+      "url": "https://mcp.aipolicies.eu/mcp",
+      "headers": { "X-API-Key": "aip_live_..." }
     }
   }
 }
 ```
+Omit `headers` to connect anonymously.
 
 ### GitHub Copilot / VS Code
 ```json
@@ -50,11 +55,13 @@ claude mcp add eu-regulations --transport http https://mcp.aipolicies.eu/mcp
   "servers": {
     "euRegulations": {
       "type": "http",
-      "url": "https://mcp.aipolicies.eu/mcp"
+      "url": "https://mcp.aipolicies.eu/mcp",
+      "headers": { "X-API-Key": "aip_live_..." }
     }
   }
 }
 ```
+Omit `headers` to connect anonymously.
 
 ---
 

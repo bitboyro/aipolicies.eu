@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Council Report — eu-regulations MCP Server Pre-Launch Evaluation</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8f9fa; color: #1a1a1a; line-height: 1.6; }
+  .container { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .header { border-bottom: 2px solid #e0e0e0; padding-bottom: 24px; margin-bottom: 32px; }
+  .header h1 { font-size: 22px; font-weight: 700; color: #111; margin-bottom: 8px; }
+  .header .question { font-size: 15px; color: #555; background: #f0f0f0; border-left: 3px solid #888; padding: 12px 16px; border-radius: 0 4px 4px 0; margin-top: 12px; }
+
+  .verdict { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 28px 32px; margin-bottom: 28px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .verdict h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 16px; }
+  .verdict h3 { font-size: 17px; font-weight: 600; color: #111; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+
+  .section { margin-bottom: 24px; }
+  .section p { font-size: 15px; color: #333; margin-bottom: 10px; }
+  .section strong { color: #111; }
+
+  .highlight-box { background: #fffbea; border: 1px solid #f0d060; border-radius: 6px; padding: 16px 20px; margin: 20px 0; }
+  .highlight-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #a07000; margin-bottom: 6px; }
+  .highlight-box p { font-size: 15px; color: #5a3e00; margin: 0; }
+
+  .action-box { background: #eef6ff; border: 1px solid #b0d0f0; border-radius: 6px; padding: 16px 20px; margin: 20px 0; }
+  .action-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #1a5a9a; margin-bottom: 6px; }
+  .action-box p { font-size: 15px; color: #0a2a5a; margin: 0; }
+
+  .agreement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .agreement-item { background: #f0faf0; border: 1px solid #b0d8b0; border-radius: 6px; padding: 12px 14px; }
+  .agreement-item .dot { width: 8px; height: 8px; background: #4a9a4a; border-radius: 50%; display: inline-block; margin-right: 8px; }
+  .agreement-item span { font-size: 13px; color: #2a5a2a; font-weight: 500; }
+
+  .clash-row { display: flex; gap: 12px; margin: 12px 0; }
+  .clash-side { flex: 1; background: #fff8f0; border: 1px solid #f0c890; border-radius: 6px; padding: 12px 14px; }
+  .clash-side .side-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #b06000; margin-bottom: 6px; }
+  .clash-side p { font-size: 13px; color: #5a3000; }
+
+  .blindspot { background: #f8f0ff; border: 1px solid #d0a0f0; border-radius: 6px; padding: 14px 18px; margin: 10px 0; }
+  .blindspot .bs-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #7030a0; margin-bottom: 4px; }
+  .blindspot p { font-size: 14px; color: #3a105a; }
+
+  .advisor-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 16px 0; }
+  .advisor-chip { border-radius: 6px; padding: 8px 10px; text-align: center; font-size: 12px; font-weight: 600; }
+  .chip-contrarian { background: #ffe8e8; color: #9a1a1a; border: 1px solid #f0b0b0; }
+  .chip-firstprinciples { background: #e8f0ff; color: #1a2a9a; border: 1px solid #b0c0f0; }
+  .chip-expansionist { background: #e8ffe8; color: #1a6a1a; border: 1px solid #b0d8b0; }
+  .chip-outsider { background: #fff8e8; color: #8a5a00; border: 1px solid #f0d890; }
+  .chip-executor { background: #f0f0f0; color: #3a3a3a; border: 1px solid #c8c8c8; }
+  .chip-label { font-size: 10px; font-weight: 400; display: block; margin-top: 2px; color: inherit; opacity: 0.7; }
+
+  details { margin: 8px 0; }
+  summary { cursor: pointer; font-size: 14px; font-weight: 600; color: #555; padding: 10px 14px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; list-style: none; display: flex; align-items: center; gap: 8px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: "▶"; font-size: 10px; transition: transform 0.2s; }
+  details[open] summary::before { transform: rotate(90deg); }
+  summary:hover { background: #ececec; }
+  .details-content { border: 1px solid #ddd; border-top: none; border-radius: 0 0 6px 6px; padding: 18px 20px; background: #fff; font-size: 14px; color: #333; line-height: 1.65; }
+  .details-content p { margin-bottom: 10px; }
+  .details-content strong { color: #111; }
+
+  .verdict-badge { display: inline-block; background: #ff4444; color: #fff; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-left: 10px; vertical-align: middle; }
+  .verdict-badge.ok { background: #2a9a4a; }
+  .verdict-badge.partial { background: #e07000; }
+
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #e0e0e0; font-size: 12px; color: #999; }
+
+  h2.section-title { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Council Report <span style="font-weight:400;color:#888;">— eu-regulations MCP Server</span></h1>
+    <div class="question">
+      <strong>Question:</strong> Is the eu-regulations MCP server ready to launch? What are the critical gaps, risks, or opportunities before it goes public?<br>
+      <small style="color:#888;">Free, read-only, no-auth HTTP MCP server · 3 EU regulations indexed · 12 tools · Target: compliance professionals + agent developers</small>
+    </div>
+  </div>
+
+  <!-- CHAIRMAN VERDICT -->
+  <div class="verdict">
+    <h2>Chairman's Verdict</h2>
+
+    <h2 class="section-title">Where the Council Agrees</h2>
+    <div class="section">
+      <p>Five out of five advisors flagged the same three problems independently: <strong>the citation rule is unenforceable</strong>, <strong>rate limiting is absent</strong>, and <strong>the corpus is unvalidated</strong>. When every perspective — including the one explicitly assigned to find upside — converges on the same failure modes, those are real blockers, not matters of opinion.</p>
+      <p>Every advisor said the same thing in different words: a compliance professional who acts on wrong, stale, or hallucinated-but-cited information faces real consequences, and the current architecture provides no protection against that. The SKILL.md citation rule is a disclaimer dressed up as a safeguard.</p>
+    </div>
+
+    <div class="agreement-grid">
+      <div class="agreement-item"><span class="dot"></span><span>Citation rule is unenforceable at the server layer</span></div>
+      <div class="agreement-item"><span class="dot"></span><span>No rate limiting = operational timebomb</span></div>
+      <div class="agreement-item"><span class="dot"></span><span>Cross-regulation edges not legally validated</span></div>
+      <div class="agreement-item"><span class="dot"></span><span>No defined failure mode / "what does wrong look like?"</span></div>
+      <div class="agreement-item"><span class="dot"></span><span>Corpus staleness is a liability, not just a UX issue</span></div>
+      <div class="agreement-item"><span class="dot"></span><span>v1 corpus scope (3 acts) is reasonable for launch</span></div>
+    </div>
+
+    <h2 class="section-title" style="margin-top:24px;">Where the Council Clashes</h2>
+    <div class="section">
+      <div class="clash-row">
+        <div class="clash-side">
+          <div class="side-label">Expansionist</div>
+          <p>No-auth, free model is a distribution weapon. Launch now. The knowledge graph is the moat. Every agent builder who integrates becomes a dependent.</p>
+        </div>
+        <div class="clash-side">
+          <div class="side-label">Contrarian + First Principles + Outsider + Executor</div>
+          <p>Same model is an operational timebomb and liability surface. No rate limiting, no corpus validation, no failure mode defined.</p>
+        </div>
+      </div>
+      <p style="margin-top:12px;font-size:14px;color:#555;"><em>Resolution: Both are right but describing different time horizons. Fix the floor, then exploit the moat. The disagreement dissolves when you sequence it correctly.</em></p>
+      <p style="margin-top:10px;font-size:14px;color:#555;">Second clash: Is the 1427-edge knowledge graph a moat or the biggest unvalidated assumption? The Contrarian and First Principles advisor say the latter. This has a concrete answer — someone needs to produce it before launch.</p>
+    </div>
+
+    <h2 class="section-title" style="margin-top:24px;">Blind Spots the Council Caught</h2>
+
+    <div class="blindspot">
+      <div class="bs-label">Blind Spot 1 — Corpus Versioning</div>
+      <p>The regulations have version identifiers — OJ publication dates, corrigenda, amendment acts. If the server returns content from a superseded article version without surfacing that, the EUR-Lex citation requirement becomes <em>actively dangerous</em>. A compliance professional citing "Article 9 of the AI Act" needs to know <strong>which version</strong> they are citing. Not addressed anywhere.</p>
+    </div>
+
+    <div class="blindspot">
+      <div class="bs-label">Blind Spot 2 — Laundered Hallucination via MCP Transport</div>
+      <p>None of the five advisors asked what happens when Claude's MCP client misparses a tool response, retries a failed call, or silently drops a result mid-reasoning chain. The actual risk is not uncited responses — it is <strong>laundered hallucination</strong>: an agent skips a result, fills the gap from training data, and still produces a confident, EUR-Lex-cited answer the user cannot distinguish from real retrieval.</p>
+    </div>
+
+    <div class="blindspot">
+      <div class="bs-label">Blind Spot 3 — MCP Client Fragmentation</div>
+      <p>Claude Code, Claude Desktop, and VS Code Copilot each implement MCP differently and update independently. No versioning, no protocol compatibility matrix, no client-specific testing. A free server fragile against the very distribution channel it depends on. The compliance professional never sees raw tool output — an agent does. Malformed responses or ambiguous tool descriptions fail invisibly.</p>
+    </div>
+
+    <h2 class="section-title" style="margin-top:24px;">The Recommendation</h2>
+    <div class="highlight-box">
+      <div class="label">Verdict</div>
+      <p><strong>Not ready to launch to compliance professionals as the primary target.</strong> Ready to launch to <strong>developers as a beta with explicit caveats.</strong></p>
+    </div>
+    <div class="section">
+      <p>The gap is not technical capability — the corpus scope, 12-tool surface area, and cross-regulation graph are credible for a v1. The gap is the trust infrastructure required to serve the stated user.</p>
+      <p>Launching to developers first is not a retreat — it is the correct sequencing. Developers will surface MCP client compatibility bugs, malformed tool responses, and edge case failures before a compliance professional ever sees them. That is free QA on the hardest problem.</p>
+      <p><strong>Three things before any public launch:</strong></p>
+      <ol style="margin: 10px 0 0 20px; font-size:15px; color:#333;">
+        <li style="margin-bottom:8px;">Add corpus version metadata (OJ publication date, last sync timestamp) to every tool response payload — as a returned field, not documentation.</li>
+        <li style="margin-bottom:8px;">Enable rate limiting on the Traefik route. Two hours of work. No argument.</li>
+        <li style="margin-bottom:8px;">Run every tool against adversarial inputs across all three MCP clients and document what breaks. Publish a compatibility matrix.</li>
+      </ol>
+    </div>
+
+    <h2 class="section-title" style="margin-top:24px;">The One Thing to Do First</h2>
+    <div class="action-box">
+      <div class="label">First Action</div>
+      <p>Put the <strong>corpus version and last-sync timestamp into every single tool response payload as a returned field</strong> — not in documentation, not in SKILL.md, not as a README note. In the payload. Every other safeguard depends on the user knowing whether what they are reading is current. Right now they cannot know that. Close that gap first.</p>
+    </div>
+  </div>
+
+  <!-- ADVISOR ALIGNMENT VISUAL -->
+  <div class="verdict" style="margin-bottom:28px;">
+    <h2>Advisor Alignment</h2>
+    <div class="advisor-grid">
+      <div class="advisor-chip chip-contrarian">The Contrarian<span class="chip-label">⚠ Not Ready</span></div>
+      <div class="advisor-chip chip-firstprinciples">First Principles<span class="chip-label">⚠ Not Ready</span></div>
+      <div class="advisor-chip chip-expansionist">The Expansionist<span class="chip-label">✓ Launch Now</span></div>
+      <div class="advisor-chip chip-outsider">The Outsider<span class="chip-label">⚠ Not Ready</span></div>
+      <div class="advisor-chip chip-executor">The Executor<span class="chip-label">⚠ Fix 3 Things</span></div>
+    </div>
+    <p style="font-size:13px;color:#666;margin-top:12px;">Peer review consensus: E (First Principles) = strongest response · A (Expansionist) = biggest blind spot · Universal miss = MCP transport failure modes + corpus versioning</p>
+  </div>
+
+  <!-- COLLAPSIBLE ADVISOR RESPONSES -->
+  <div class="verdict">
+    <h2>Advisor Responses</h2>
+
+    <details>
+      <summary><span style="color:#9a1a1a;">The Contrarian</span></summary>
+      <div class="details-content">
+        <p>Three critical problems before this goes live.</p>
+        <p><strong>The citation rule is unenforceable and creates liability, not protection.</strong> "Every claim must cite EUR-Lex" is a prompt instruction in a SKILL.md file. Claude can and will hallucinate citations, cite the wrong article, or paraphrase incorrectly while attaching a real-looking EUR-Lex URL. Compliance professionals who rely on this for actual regulatory work and get a wrong citation face real consequences. The server has no mechanism to verify that what Claude says matches what the tool returned. The citation rule gives false confidence.</p>
+        <p><strong>1427 edges and 36 dimensions sounds impressive until you ask: validated by whom?</strong> The knowledge graph was built programmatically. Who confirmed the cross-regulation edges are legally meaningful? A dimension-mediated edge between GDPR Article 22 and AI Act Article 9 might be spurious pattern-matching. Lawyers using this for compliance work will find one bad connection and distrust the entire corpus.</p>
+        <p><strong>"No-auth, free, read-only" with no rate limiting is an operational timebomb.</strong> The first time someone builds a scraper or a bulk embedding job against it, the server goes down. "Free" is fine; "unprotected" is not. When it's down, the SKILL.md tells agents to call it — they'll fail silently or with unhelpful errors.</p>
+        <p>The opportunity hiding in these gaps: a disclaimer layer that surfaces tool output verbatim alongside any synthesis, plus a confidence/provenance field per result. That's the difference between a toy and something compliance teams can actually cite in an audit. <strong>Not ready. Fix the liability surface first.</strong></p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span style="color:#1a2a9a;">The First Principles Thinker</span></summary>
+      <div class="details-content">
+        <p>The question assumes "launch readiness" is the right frame. It isn't. The real question is: <strong>what job does this server do, and does anything prevent it from doing that job?</strong></p>
+        <p>What does a compliance professional actually need? (1) Trust that the information is current and authoritative. (2) Ability to act on what they find. (3) Confidence the tool won't silently mislead them.</p>
+        <p><strong>Gap 1: Corpus staleness is existential, not operational.</strong> The EU AI Act has implementing acts, delegated acts, and guidance trickling out continuously. A stale corpus doesn't just reduce utility — it creates liability. When did these documents last sync? Is there a sync mechanism at all?</p>
+        <p><strong>Gap 2: The 12-tool surface area solves a problem users don't have.</strong> Compliance professionals don't want to orchestrate 12 tools. They want answers. The complexity lives in your system, not theirs.</p>
+        <p><strong>Gap 3: "Read-only, no-auth" is a feature statement, not a trust statement.</strong> Who maintains this? What's the SLA? When it returns wrong information (it will), what's the correction path? The SKILL.md citation rule implies Claude is responsible for accuracy. That's wrong. The server is responsible.</p>
+        <p><strong>The actual launch blocker:</strong> You haven't defined what "wrong" looks like and how you'll catch it. Until you have a correctness monitoring mechanism, you're not launching a compliance tool — you're launching a confidence trap.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span style="color:#1a6a1a;">The Expansionist</span></summary>
+      <div class="details-content">
+        <p>This is undervalued as a <em>platform</em>, not just a tool. What you're actually sitting on is the infrastructure for a <strong>living regulatory intelligence layer</strong>.</p>
+        <p><strong>The corpus is the moat, not the server.</strong> 1427 edges and 652+ domain-concept nodes across three acts is non-trivial curation work. The question before launch isn't "is the server ready" — it's "how fast can you index NIS2, CRA, DORA, DSA, DMA?" Every regulation you add increases the value exponentially because cross-regulation edges compound. Users don't want three regulations — they want the EU regulatory graph.</p>
+        <p><strong>The no-auth, free model is a distribution weapon.</strong> Every AI agent builder who integrates this becomes a dependent. Once you're in their agent stack, switching cost is high. This is land-and-expand at the infrastructure layer.</p>
+        <p><strong>The SKILL.md companion is underrated.</strong> You're shipping a cognitive interface contract, not just an API. Formalize it — version the SKILL.md alongside the server, publish a changelog, make it something agent builders can pin.</p>
+        <p>The critical opportunity before launch: <strong>publish a public roadmap of which regulations are coming next.</strong> The roadmap is what turns a tool into a platform.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span style="color:#8a5a00;">The Outsider</span></summary>
+      <div class="details-content">
+        <p>The product description is written for someone who already knows what it is. "12 tools," "1427 graph edges," "652+ domain-concept nodes" — these numbers mean nothing to a compliance professional. The framing is engineer-to-engineer, not engineer-to-buyer.</p>
+        <p><strong>The corpus gap is invisible.</strong> A first-time user has no way to know what's missing until they ask a question and get a confident-sounding answer about something you haven't indexed. That's a professional liability for the compliance officer citing your output to their board.</p>
+        <p><strong>"No-auth, free, read-only" sounds like a prototype.</strong> Legal ops teams expect rate limiting, SLAs, and audit trails. The absence of auth is a feature to a developer and a red flag to a compliance team's IT security.</p>
+        <p><strong>The citation rule is load-bearing but unverifiable.</strong> If a regulation was amended after indexing, the citation rule creates false confidence rather than preventing it.</p>
+        <p>The biggest gap: <strong>there's no failure mode described anywhere.</strong> What does the system say when it doesn't know? Until that's answered, launching to compliance professionals is premature.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span style="color:#3a3a3a;">The Executor</span></summary>
+      <div class="details-content">
+        <p>Three concrete things blocking Monday launch, ranked by how fast they'll hurt you:</p>
+        <p><strong>1. Rate limiting is not mentioned anywhere.</strong> A free, no-auth HTTP endpoint with no rate limiting is a free DDOS target. This takes two hours. Do it first.</p>
+        <p><strong>2. You have no error baseline.</strong> The report_error tool collects errors — but right now you have zero traffic, so you have no idea if the 12 tools actually work end-to-end under real agent usage. Run Claude Desktop against every single tool with adversarial inputs. Log every failure. Fix what breaks. Half a day of work.</p>
+        <p><strong>3. The SKILL.md citation rule has no enforcement path.</strong> Add EUR-Lex URLs directly into every tool response payload so the citation is automatic, not optional. One-sprint fix but it's the difference between a professional tool and a liability.</p>
+        <p>What's actually ready: the corpus scope (3 acts, cross-regulation graph) is reasonable for a v1. The 12-tool surface area is coherent.</p>
+        <p><strong>First step Monday: enable rate limiting on the Traefik route.</strong> Everything else can follow, but that one can't wait.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- PEER REVIEW HIGHLIGHTS -->
+  <div class="verdict">
+    <h2>Peer Review Highlights</h2>
+    <details>
+      <summary>What the reviewers said</summary>
+      <div class="details-content">
+        <p><strong>Strongest response (4/5 votes):</strong> The First Principles Thinker — for reframing around user jobs-to-be-done, the "confidence trap" diagnosis, and forcing the builder to define what "wrong" means before shipping.</p>
+        <p><strong>Biggest blind spot (5/5 votes):</strong> The Expansionist — for treating the corpus as a moat and the no-auth model as pure upside without any operational risk calibration. "Optimism without risk calibration is not strategy, it's cheerleading."</p>
+        <p><strong>Universal miss across all five advisors:</strong></p>
+        <ul style="margin: 8px 0 0 18px;">
+          <li style="margin-bottom:6px;"><strong>Corpus versioning:</strong> OJ publication dates and amendment provenance are not surfaced in responses — making every citation potentially stale.</li>
+          <li style="margin-bottom:6px;"><strong>MCP transport as silent failure mode:</strong> Tool responses can be misparsed, retried, or silently dropped. Laundered hallucination is harder to catch than a missing citation.</li>
+          <li style="margin-bottom:6px;"><strong>MCP client fragmentation:</strong> Claude Code, Claude Desktop, and VS Code Copilot implement MCP differently. No compatibility matrix exists.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <div class="footer">
+    Council session — 2026-06-13 · 5 advisors · 5 peer reviewers · 1 chairman synthesis<br>
+    Question counciled: eu-regulations MCP server pre-launch evaluation
+  </div>
+
+</div>
+</body>
+</html>
